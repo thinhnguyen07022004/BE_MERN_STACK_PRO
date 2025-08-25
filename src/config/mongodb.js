@@ -1,10 +1,9 @@
 import { MongoClient, ServerApiVersion } from 'mongodb'
+import { env } from '~/config/environment.js'
 
-const url = 'mongodb+srv://hoidanit:QLbENgTphP0qvTNF@cluster0.ww7jj.mongodb.net/myDatabase?retryWrites=true&w=majority'
-const dbName = 'trello-mern-stack-pro'
 let trelloDatabaseInstance = null
 
-const mongoClient = new MongoClient(url, {
+const mongoClient = new MongoClient(env.MONGODB_URI, {
     serverApi: {
         version: ServerApiVersion.v1,
         strict: true,
@@ -15,7 +14,7 @@ const mongoClient = new MongoClient(url, {
 
 export const CONNECT_DB = async () => {
     await mongoClient.connect()
-    trelloDatabaseInstance = mongoClient.db(dbName)
+    trelloDatabaseInstance = mongoClient.db(env.DATABASE_NAME)
 }
 
 export const GET_DB = () => {
